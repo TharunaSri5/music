@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Music Player</title>
+    <style>
+        :root {
+            --accent: #d4af37; /* Gold */
+            --bg-dark: #06211a; /* Deep Emerald */
+            --glass: rgba(255, 255, 255, 0.05);
+            --text: #e0e0e0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: radial-gradient(circle at top left, #0a3d31, #06211a);
+            color: var(--text);
+        }
+
+        .player-wrapper {
+            width: 380px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+        }
+
+        /* Top Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+        }
+
+        /* Main Album Section */
+        .main-display {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .album-cover {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 25px;
+            border-radius: 25px;
+            background: url('https://picsum.photos/seed/music/300/300') center/cover;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .album-cover:hover { transform: scale(1.05) rotate(2deg); }
+
+        .song-details h2 { font-size: 1.5rem; margin-bottom: 5px; }
+        .song-details p { font-size: 0.9rem; color: #888; }
+
+        /* Progress Bar */
+        .slider-area { margin: 25px 0; }
+        .bar {
+            height: 5px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            position: relative;
+        }
+        .fill {
+            width: 65%;
+            height: 100%;
+            background: var(--accent);
+            border-radius: 5px;
+            box-shadow: 0 0 15px var(--accent);
+        }
+        .time {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            margin-top: 10px;
+            color: #666;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+
+        .btn:hover { color: var(--accent); transform: scale(1.1); }
+
+        .play-wrap {
+            width: 70px;
+            height: 70px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: black;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        /* CONSECUTIVE TRACKS SECTION */
+        .queue {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+        }
+
+        .queue-title {
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+            color: #555;
+        }
+
+        .track-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+            border-radius: 15px;
+            transition: 0.3s;
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+
+        .track-item.previous { opacity: 0.5; filter: grayscale(1); }
+        .track-item:hover { background: rgba(255,255,255,0.05); }
+
+        .track-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-size: cover;
+        }
+
+        .track-info span { display: block; font-size: 0.85rem; }
+        .track-info .artist { font-size: 0.7rem; color: #666; }
+
+        .tag {
+            margin-left: auto;
+            font-size: 0.6rem;
+            padding: 2px 8px;
+            border: 1px solid #444;
+            border-radius: 10px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="player-wrapper">
+        <div class="header">
+            <span>Playlist</span>
+            <span>•••</span>
+        </div>
+
+        <div class="main-display">
+            <div class="album-cover"></div>
+            <div class="song-details">
+                <h2>Golden Hour</h2>
+                <p>JVKE • Single</p>
+            </div>
+        </div>
+
+        <div class="slider-area">
+            <div class="bar"><div class="fill"></div></div>
+            <div class="time">
+                <span>02:10</span>
+                <span>03:45</span>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn">🔁</button>
+            <button class="btn">⏮</button>
+            <div class="play-wrap">▶</div>
+            <button class="btn">⏭</button>
+            <button class="btn">🔀</button>
+        </div>
+
+        <div class="queue">
+            <span class="queue-title">UP NEXT</span>
+            
+            <div class="track-item previous">
+                <div class="track-img" style="background-image: url('https://picsum.photos/seed/old/50/50');"></div>
+                <div class="track-info">
+                    <span>Stargazing</span>
+                    <span class="artist">The Neighbourhood</span>
+                </div>
+                <div class="tag">PREV</div>
+            </div>
+
+            <div class="track-item">
+                <div class="track-img" style="background-image: url('https://picsum.photos/seed/next/50/50');"></div>
+                <div class="track-info">
+                    <span>After Hours</span>
+                    <span class="artist">The Weeknd</span>
+                </div>
+                <div class="tag">NEXT</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
